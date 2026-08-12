@@ -9,8 +9,8 @@
         :root {
             --bg-primary: #121212;
             --bg-surface: #1E1E1E;
-            --accent-teal: #14B8A6;
-            --accent-coral: #FB7185;
+            --accent-primary: #14B8A6;
+            --accent-secondary: #FB7185;
             --text-primary: #F8FAFC;
             --text-secondary: #94A3B8;
             --border-color: #334155;
@@ -26,41 +26,42 @@
         }
 
         header {
-            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            padding: 3rem 1rem;
+            background: linear-gradient(180deg, #1a1a1a 0%, var(--bg-primary) 100%);
         }
 
         h1 {
-            font-size: 2.5rem;
             font-weight: 700;
-            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            margin: 0;
             letter-spacing: -0.025em;
+            color: var(--text-primary);
         }
 
         .disclaimer {
-            background-color: rgba(20, 184, 166, 0.1);
-            color: var(--accent-teal);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
             display: inline-block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 1px solid var(--accent-teal);
             margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(20, 184, 166, 0.1);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 8px;
         }
 
         main {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
         .viz-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .card {
@@ -71,11 +72,11 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
+        .card h2 {
+            font-size: 1.25rem;
             margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
             text-align: center;
         }
 
@@ -90,36 +91,33 @@
             color: var(--text-secondary);
         }
 
-        th {
-            background-color: rgba(51, 65, 85, 0.5);
-            color: var(--text-primary);
+        th, td {
+            padding: 1rem;
             text-align: left;
-            padding: 1rem;
-            font-weight: 600;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        td {
-            padding: 1rem;
             border-bottom: 1px solid var(--border-color);
         }
 
-        tr:hover {
+        th {
+            color: var(--text-primary);
+            font-weight: 600;
             background-color: rgba(255, 255, 255, 0.02);
         }
 
-        @media (max-width: 600px) {
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        @media (max-width: 768px) {
             .viz-grid {
                 grid-template-columns: 1fr;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.75rem;
             }
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>AuroraFit Performance Dashboard</h1>
         <div class="disclaimer">
@@ -130,21 +128,21 @@
     <main>
         <div class="viz-grid">
             <div class="card">
-                <div class="card-title">Projected Visitors</div>
-                <canvas id="visitorsChart" aria-label="Line chart showing projected visitor growth"></canvas>
+                <h2>Monthly Visitors</h2>
+                <canvas id="visitorsChart" aria-label="Line chart showing growth of monthly visitors"></canvas>
             </div>
             <div class="card">
-                <div class="card-title">Projected Conversions</div>
-                <canvas id="conversionsChart" aria-label="Bar chart showing projected conversion growth"></canvas>
+                <h2>Total Conversions</h2>
+                <canvas id="conversionsChart" aria-label="Bar chart showing growth of monthly conversions"></canvas>
             </div>
-            <div class="card">
-                <div class="card-title">Projected Churn Rate (%)</div>
-                <canvas id="churnChart" aria-label="Line chart showing projected churn rate decline"></canvas>
+            <div class="card" style="grid-column: span 2;">
+                <h2>Churn Rate Trend (%)</h2>
+                <canvas id="churnChart" aria-label="Line chart showing decline of churn rate" style="max-height: 300px;"></canvas>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">Projected Data Summary</div>
+            <h2>Projected Data Summary</h2>
             <div class="table-container">
                 <table>
                     <thead>
@@ -157,7 +155,7 @@
                         </tr>
                     </thead>
                     <tbody id="dataTable">
-                        <!-- Data injected by JS -->
+                        <!-- Data inserted by JS -->
                     </tbody>
                 </table>
             </div>
@@ -175,22 +173,21 @@
                 { month: 'Month 6', visitors: 2523, conversions: 68, convRate: 2.7, churnRate: 5.5 },
             ];
 
-            // Populate Table
-            const tableBody = document.getElementById('dataTable');
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row.month}</td>
-                    <td>${row.visitors.toLocaleString()}</td>
-                    <td>${row.conversions}</td>
-                    <td>${row.convRate}%</td>
-                    <td>${row.churnRate}%</td>
-                `;
-                tableBody.appendChild(tr);
+            const labels = data.map(d => d.month);
+
+            // Data Table
+            const tbody = document.getElementById('dataTable');
+            data.forEach(d => {
+                const row = `<tr>
+                    <td>${d.month}</td>
+                    <td>${d.visitors.toLocaleString()}</td>
+                    <td>${d.conversions}</td>
+                    <td>${d.convRate}%</td>
+                    <td>${d.churnRate}%</td>
+                </tr>`;
+                tbody.innerHTML += row;
             });
 
-            const labels = data.map(d => d.month);
-            
             // Visitors Chart
             new Chart(document.getElementById('visitorsChart'), {
                 type: 'line',
@@ -247,11 +244,12 @@
                         data: data.map(d => d.churnRate),
                         borderColor: '#14B8A6',
                         borderDash: [5, 5],
-                        tension: 0.1
+                        tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: { legend: { labels: { color: '#94A3B8' } } },
                     scales: {
                         y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
