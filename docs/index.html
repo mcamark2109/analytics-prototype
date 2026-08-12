@@ -3,275 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Small Breed Vitality Milk: Strategic Rollout Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Rapid-Response Delivery: Growth Projection Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --base: #FFFFFF;
-            --secondary: #708090;
-            --accent1: #007BFF;
-            --accent2: #2ECC71;
-            --text: #333333;
-            --bg-light: #f8f9fa;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --deep-navy: #0A192F;
+            --medical-teal: #64FFDA;
+            --sterile-white: #FFFFFF;
+            --slate-grey: #8892B0;
+            --clinical-red: #FF4D4D;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--base);
-            color: var(--text);
-            line-height: 1.6;
+            background-color: var(--deep-navy);
+            color: var(--sterile-white);
+            font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
             padding: 0;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
         header {
             text-align: center;
-            padding: 3rem 1rem 2rem;
-            background-color: var(--bg-light);
-            border-bottom: 1px solid #eee;
-        }
-
-        h1 {
-            font-weight: 600;
-            font-size: 1.75rem;
-            color: var(--accent1);
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .projection-badge {
-            display: inline-block;
-            background-color: #FFF3CD;
-            color: #856404;
-            border: 1px solid #FFEEBA;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            max-width: 600px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .chart-card {
-            background: var(--base);
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .chart-card h2 {
+        .disclaimer-banner {
+            background-color: var(--clinical-red);
+            color: var(--sterile-white);
+            text-align: center;
+            padding: 1rem;
+            font-weight: bold;
             font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--medical-teal);
+        }
+
+        .chart-title {
+            color: var(--slate-grey);
             text-align: center;
-        }
-
-        .data-section {
-            margin-top: 4rem;
-        }
-
-        .data-section h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--secondary);
             margin-bottom: 1rem;
-            text-align: center;
+            font-size: 1.2rem;
         }
 
-        .table-wrapper {
+        .table-section {
+            margin-top: 4rem;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--slate-grey);
         }
 
         th, td {
+            padding: 1rem;
             text-align: left;
-            padding: 0.75rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.3);
         }
 
         th {
-            background-color: var(--bg-light);
-            color: var(--secondary);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--medical-teal);
+            font-weight: bold;
         }
 
         tr:hover {
-            background-color: #fafafa;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 992px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.4rem; }
-            .chart-grid { grid-template-columns: 1fr; }
+            .container {
+                padding: 1rem;
+            }
+            body {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>Small Breed Vitality Milk: Strategic Rollout Dashboard</h1>
-        <div class="projection-badge">
-            PROTOTYPE: This dashboard contains SIMULATED/PROJECTED data for planning purposes.
-        </div>
-    </header>
+    <div class="disclaimer-banner">
+        SIMULATED/PROJECTED DATA FOR PLANNING PURPOSES
+    </div>
 
     <div class="container">
-        <div class="chart-grid">
-            <div class="chart-card">
-                <h2>Projected Visitor Growth</h2>
-                <canvas id="chartTraffic" aria-label="Line chart showing visitor growth from Month 1 to 6"></canvas>
+        <header>
+            <h1>Rapid-Response Delivery: Growth Projection Dashboard</h1>
+            <p style="color: var(--slate-grey);">Projected growth strategy for Medical Cannabis Delivery - "Fastest in Market" positioning</p>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="chart-container">
+                <div class="chart-title">Visitor Growth</div>
+                <canvas id="visitorChart"></canvas>
             </div>
-            <div class="chart-card">
-                <h2>Projected Conversion Growth</h2>
-                <canvas id="chartAcquisition" aria-label="Line chart showing conversion growth from Month 1 to 6"></canvas>
+            <div class="chart-container">
+                <div class="chart-title">Conversion Volume</div>
+                <canvas id="conversionChart"></canvas>
             </div>
-            <div class="chart-card">
-                <h2>Projected Churn Rate Decrease</h2>
-                <canvas id="chartRetention" aria-label="Line chart showing churn rate decrease from Month 1 to 6"></canvas>
+            <div class="chart-container">
+                <div class="chart-title">Churn Rate Trend</div>
+                <canvas id="churnChart"></canvas>
             </div>
         </div>
 
-        <div class="data-section">
-            <h2>Raw Data Repository</h2>
-            <div class="table-wrapper">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Visitors</th>
-                            <th>Conversions</th>
-                            <th>Conv. Rate</th>
-                            <th>Churn Rate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data injected via JS -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Data Reference Table</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Visitors</th>
+                        <th>Conversions</th>
+                        <th>Conversion Rate</th>
+                        <th>Churn Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data injected via JS -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        const rawData = [
-            { month: 'Month 1', visitors: 1673, conversions: 37, rate: '2.2%', churn: 6.5 },
-            { month: 'Month 2', visitors: 1840, conversions: 46, rate: '2.5%', churn: 6.3 },
-            { month: 'Month 3', visitors: 2061, conversions: 56, rate: '2.7%', churn: 5.9 },
-            { month: 'Month 4', visitors: 2246, conversions: 63, rate: '2.8%', churn: 5.8 },
-            { month: 'Month 5', visitors: 2493, conversions: 70, rate: '2.8%', churn: 5.5 },
-            { month: 'Month 6', visitors: 2692, conversions: 73, rate: '2.7%', churn: 5.5 },
+        const projectedData = [
+            { month: "Month 1", visitors: 1596, conversions: 35, convRate: "2.2%", churn: "6.5%" },
+            { month: "Month 2", visitors: 1788, conversions: 41, convRate: "2.3%", churn: "6.1%" },
+            { month: "Month 3", visitors: 1985, conversions: 42, convRate: "2.1%", churn: "5.8%" },
+            { month: "Month 4", visitors: 2184, conversions: 50, convRate: "2.3%", churn: "5.6%" },
+            { month: "Month 5", visitors: 2381, conversions: 52, convRate: "2.2%", churn: "5.5%" },
+            { month: "Month 6", visitors: 2571, conversions: 64, convRate: "2.5%", churn: "5.5%" },
         ];
 
-        // Populate Table
-        const tbody = document.querySelector('#dataTable tbody');
-        rawData.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${row.month}</td><td>${row.visitors}</td><td>${row.conversions}</td><td>${row.rate}</td><td>${row.churn}%</td>`;
-            tbody.appendChild(tr);
-        });
+        function initCharts() {
+            const labels = projectedData.map(d => d.month);
+            const colors = {
+                teal: '#64FFDA',
+                white: '#FFFFFF',
+                grey: '#8892B0',
+                red: '#FF4D4D'
+            };
 
-        // Common Chart Options
-        const commonOptions = {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
+            const commonOptions = {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: colors.grey },
+                        grid: { color: 'rgba(136, 146, 176, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: colors.grey },
+                        grid: { color: 'rgba(136, 146, 176, 0.1)' }
+                    }
                 }
-            },
-            scales: {
-                x: { grid: { display: false } },
-                y: { beginAtZero: false }
-            },
-            elements: {
-                line: { tension: 0.4 }
-            }
+            };
+
+            // Visitor Growth
+            new Chart(document.getElementById('visitorChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visitors',
+                        data: projectedData.map(d => d.visitors),
+                        borderColor: colors.teal,
+                        backgroundColor: colors.teal + '33',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: commonOptions
+            });
+
+            // Conversion Volume
+            new Chart(document.getElementById('conversionChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Conversions',
+                        data: projectedData.map(d => d.conversions),
+                        borderColor: colors.teal,
+                        backgroundColor: colors.teal + '33',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: commonOptions
+            });
+
+            // Churn Rate
+            new Chart(document.getElementById('churnChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Churn %',
+                        data: projectedData.map(d => parseFloat(d.churn)),
+                        borderColor: colors.red,
+                        backgroundColor: colors.red + '33',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        ...commonOptions.scales,
+                        y: {
+                            ...commonOptions.scales.y,
+                            ticks: {
+                                color: colors.grey,
+                                callback: value => value + '%'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function populateTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            projectedData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.month}</td>
+                    <td>${row.visitors.toLocaleString()}</td>
+                    <td>${row.conversions}</td>
+                    <td>${row.convRate}</td>
+                    <td style="color: ${parseFloat(row.churn) > 6 ? 'var(--clinical-red)' : 'inherit'}">${row.churn}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.onload = () => {
+            initCharts();
+            populateTable();
         };
-
-        // Chart A: Traffic
-        new Chart(document.getElementById('chartTraffic'), {
-            type: 'line',
-            data: {
-                labels: rawData.map(d => d.month),
-                datasets: [{
-                    data: rawData.map(d => d.visitors),
-                    borderColor: '#007BFF',
-                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#007BFF'
-                }]
-            },
-            options: commonOptions
-        });
-
-        // Chart B: Acquisition
-        new Chart(document.getElementById('chartAcquisition'), {
-            type: 'line',
-            data: {
-                labels: rawData.map(d => d.month),
-                datasets: [{
-                    data: rawData.map(d => d.conversions),
-                    borderColor: '#2ECC71',
-                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#2ECC71'
-                }]
-            },
-            options: commonOptions
-        });
-
-        // Chart C: Retention
-        new Chart(document.getElementById('chartRetention'), {
-            type: 'line',
-            data: {
-                labels: rawData.map(d => d.month),
-                datasets: [{
-                    data: rawData.map(d => d.churn),
-                    borderColor: '#708090',
-                    backgroundColor: 'rgba(112, 128, 144, 0.1)',
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#708090'
-                }]
-            },
-            options: commonOptions
-        });
     </script>
 </body>
 </html>
