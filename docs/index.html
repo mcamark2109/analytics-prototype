@@ -3,278 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Horizon: Strategic Performance Projection</title>
+    <title>Small Breed Vitality Milk: Strategic Rollout Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --midnight-obsidian: #0A0A0B;
-            --champagne-gold: #D4AF37;
-            --soft-platinum: #E5E4E2;
-            --ivory-silk: #FDFDFD;
-            --slate-shadow: #666666;
+            --base: #FFFFFF;
+            --secondary: #708090;
+            --accent1: #007BFF;
+            --accent2: #2ECC71;
+            --text: #333333;
+            --bg-light: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background-color: var(--midnight-obsidian);
-            color: var(--ivory-silk);
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--base);
+            color: var(--text);
             line-height: 1.6;
+            padding: 0;
         }
 
         header {
             text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(180deg, #151518 0%, var(--midnight-obsidian) 100%);
-            border-bottom: 1px solid var(--champagne-gold);
+            padding: 3rem 1rem 2rem;
+            background-color: var(--bg-light);
+            border-bottom: 1px solid #eee;
         }
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--champagne-gold);
-            font-size: 3rem;
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: var(--accent1);
+            letter-spacing: -0.02em;
             margin-bottom: 1rem;
         }
 
-        .disclaimer {
-            color: var(--soft-platinum);
-            font-size: 0.9rem;
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            max-width: 700px;
-            margin: 0 auto;
-            border: 1px solid var(--slate-shadow);
-            padding: 10px 20px;
+        .projection-badge {
             display: inline-block;
+            background-color: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            max-width: 600px;
         }
 
-        main {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
 
-        .analytics-grid {
+        .chart-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-bottom: 80px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .luxury-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 30px;
-            border-radius: 2px;
-            transition: border 0.3s ease;
+        .chart-card {
+            background: var(--base);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .luxury-card:hover {
-            border-color: var(--champagne-gold);
-        }
-
-        .luxury-card h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--champagne-gold);
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+        .chart-card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
             text-align: center;
         }
 
         .data-section {
-            margin-top: 80px;
+            margin-top: 4rem;
         }
 
         .data-section h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--champagne-gold);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 1rem;
             text-align: center;
-            margin-bottom: 40px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 100px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
         }
 
         th {
-            color: var(--slate-shadow);
-            text-align: left;
-            font-weight: 400;
-            padding: 15px;
-            border-bottom: 1px solid var(--slate-shadow);
+            background-color: var(--bg-light);
+            color: var(--secondary);
+            font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
         }
 
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--ivory-silk);
+        tr:hover {
+            background-color: #fafafa;
         }
 
-        tr:hover td {
-            background-color: rgba(212, 175, 55, 0.05);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: var(--slate-shadow);
-            font-size: 0.8rem;
+        @media (max-width: 600px) {
+            h1 { font-size: 1.4rem; }
+            .chart-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Apex Horizon: Strategic Performance Projection</h1>
-        <div class="disclaimer">
-            NOTICE: This dashboard contains simulated/projected estimates for strategic planning purposes only.
+        <h1>Small Breed Vitality Milk: Strategic Rollout Dashboard</h1>
+        <div class="projection-badge">
+            PROTOTYPE: This dashboard contains SIMULATED/PROJECTED data for planning purposes.
         </div>
     </header>
 
-    <main>
-        <section class="analytics-grid">
-            <div class="luxury-card">
-                <h2>Visitor Growth Trend</h2>
-                <canvas id="visitorsChart"></canvas>
+    <div class="container">
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h2>Projected Visitor Growth</h2>
+                <canvas id="chartTraffic" aria-label="Line chart showing visitor growth from Month 1 to 6"></canvas>
             </div>
-            <div class="luxury-card">
-                <h2>Conversion Volume</h2>
-                <canvas id="conversionsChart"></canvas>
+            <div class="chart-card">
+                <h2>Projected Conversion Growth</h2>
+                <canvas id="chartAcquisition" aria-label="Line chart showing conversion growth from Month 1 to 6"></canvas>
             </div>
-            <div class="luxury-card">
-                <h2>Churn Rate Decline</h2>
-                <canvas id="churnChart"></canvas>
+            <div class="chart-card">
+                <h2>Projected Churn Rate Decrease</h2>
+                <canvas id="chartRetention" aria-label="Line chart showing churn rate decrease from Month 1 to 6"></canvas>
             </div>
-        </section>
+        </div>
 
-        <section class="data-section">
+        <div class="data-section">
             <h2>Raw Data Repository</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Month</th>
-                        <th>Visitors</th>
-                        <th>Conversions</th>
-                        <th>Conv. Rate</th>
-                        <th>Churn Rate</th>
-                    </tr>
-                </thead>
-                <tbody id="dataTableBody">
-                    <!-- Data injected via JS -->
-                </tbody>
-            </table>
-        </section>
-    </main>
-
-    <footer>
-        &copy; 2026 Apex Horizon Luxury repositioning campaign.
-    </footer>
+            <div class="table-wrapper">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Visitors</th>
+                            <th>Conversions</th>
+                            <th>Conv. Rate</th>
+                            <th>Churn Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const data = [
-            { month: 'Month 1', visitors: 1568, conversions: 34, convRate: '2.2%', churnRate: 6.5 },
-            { month: 'Month 2', visitors: 1709, conversions: 39, convRate: '2.3%', churnRate: 6.4 },
-            { month: 'Month 3', visitors: 1880, conversions: 39, convRate: '2.1%', churnRate: 6.2 },
-            { month: 'Month 4', visitors: 2087, conversions: 48, convRate: '2.3%', churnRate: 5.9 },
-            { month: 'Month 5', visitors: 2337, conversions: 51, convRate: '2.2%', churnRate: 5.5 },
-            { month: 'Month 6', visitors: 2524, conversions: 63, convRate: '2.5%', churnRate: 5.5 },
+        const rawData = [
+            { month: 'Month 1', visitors: 1673, conversions: 37, rate: '2.2%', churn: 6.5 },
+            { month: 'Month 2', visitors: 1840, conversions: 46, rate: '2.5%', churn: 6.3 },
+            { month: 'Month 3', visitors: 2061, conversions: 56, rate: '2.7%', churn: 5.9 },
+            { month: 'Month 4', visitors: 2246, conversions: 63, rate: '2.8%', churn: 5.8 },
+            { month: 'Month 5', visitors: 2493, conversions: 70, rate: '2.8%', churn: 5.5 },
+            { month: 'Month 6', visitors: 2692, conversions: 73, rate: '2.7%', churn: 5.5 },
         ];
 
-        const labels = data.map(d => d.month);
-        const goldColor = '#D4AF37';
-        const platinumColor = '#E5E4E2';
+        // Populate Table
+        const tbody = document.querySelector('#dataTable tbody');
+        rawData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row.month}</td><td>${row.visitors}</td><td>${row.conversions}</td><td>${row.rate}</td><td>${row.churn}%</td>`;
+            tbody.appendChild(tr);
+        });
 
-        // Common chart options
+        // Common Chart Options
         const commonOptions = {
             responsive: true,
             plugins: {
-                legend: { display: false }
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
             },
             scales: {
-                x: {
-                    grid: { color: 'rgba(229, 228, 226, 0.1)' },
-                    ticks: { color: '#666666' }
-                },
-                y: {
-                    grid: { color: 'rgba(229, 228, 226, 0.1)' },
-                    ticks: { color: '#666666' }
-                }
+                x: { grid: { display: false } },
+                y: { beginAtZero: false }
+            },
+            elements: {
+                line: { tension: 0.4 }
             }
         };
 
-        // Visitors Chart
-        new Chart(document.getElementById('visitorsChart'), {
+        // Chart A: Traffic
+        new Chart(document.getElementById('chartTraffic'), {
             type: 'line',
             data: {
-                labels: labels,
+                labels: rawData.map(d => d.month),
                 datasets: [{
-                    label: 'Visitors',
-                    data: data.map(d => d.visitors),
-                    borderColor: goldColor,
-                    backgroundColor: 'transparent',
+                    data: rawData.map(d => d.visitors),
+                    borderColor: '#007BFF',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    fill: true,
                     borderWidth: 3,
-                    tension: 0.3,
-                    pointBackgroundColor: goldColor
+                    pointRadius: 4,
+                    pointBackgroundColor: '#007BFF'
                 }]
             },
             options: commonOptions
         });
 
-        // Conversions Chart
-        new Chart(document.getElementById('conversionsChart'), {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Conversions',
-                    data: data.map(d => d.conversions),
-                    backgroundColor: goldColor,
-                    borderRadius: 2
-                }]
-            },
-            options: commonOptions
-        });
-
-        // Churn Chart
-        new Chart(document.getElementById('churnChart'), {
+        // Chart B: Acquisition
+        new Chart(document.getElementById('chartAcquisition'), {
             type: 'line',
             data: {
-                labels: labels,
+                labels: rawData.map(d => d.month),
                 datasets: [{
-                    label: 'Churn Rate (%)',
-                    data: data.map(d => d.churnRate),
-                    borderColor: goldColor,
-                    backgroundColor: 'transparent',
+                    data: rawData.map(d => d.conversions),
+                    borderColor: '#2ECC71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    fill: true,
                     borderWidth: 3,
-                    tension: 0.3,
-                    pointBackgroundColor: goldColor
+                    pointRadius: 4,
+                    pointBackgroundColor: '#2ECC71'
                 }]
             },
             options: commonOptions
         });
 
-        // Table Injection
-        const tableBody = document.getElementById('dataTableBody');
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.month}</td>
-                <td>${row.visitors.toLocaleString()}</td>
-                <td>${row.conversions}</td>
-                <td>${row.convRate}</td>
-                <td>${row.churnRate}%</td>
-            `;
-            tableBody.appendChild(tr);
+        // Chart C: Retention
+        new Chart(document.getElementById('chartRetention'), {
+            type: 'line',
+            data: {
+                labels: rawData.map(d => d.month),
+                datasets: [{
+                    data: rawData.map(d => d.churn),
+                    borderColor: '#708090',
+                    backgroundColor: 'rgba(112, 128, 144, 0.1)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#708090'
+                }]
+            },
+            options: commonOptions
         });
     </script>
 </body>
