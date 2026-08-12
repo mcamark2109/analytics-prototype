@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-color: #121212;
-            --card-color: #1E1E1E;
+            --surface-color: #1E1E1E;
             --primary-accent: #14B8A6;
             --secondary-accent: #FB7185;
             --text-primary: #F8FAFC;
@@ -19,7 +19,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
@@ -34,33 +34,36 @@
         h1 {
             font-weight: 700;
             font-size: 2.5rem;
-            margin: 0;
+            margin: 0 0 0.5rem 0;
             letter-spacing: -0.025em;
         }
 
         .disclaimer {
             color: var(--text-secondary);
             font-size: 0.9rem;
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid var(--primary-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
             margin-top: 0.5rem;
-            font-style: italic;
-            opacity: 0.8;
         }
 
         main {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .card {
-            background-color: var(--card-color);
+            background-color: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -69,40 +72,42 @@
 
         .card h2 {
             font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
             color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-weight: 600;
+            text-align: center;
         }
 
         .table-container {
-            overflow-x: auto;
             width: 100%;
+            overflow-x: auto;
+            margin-top: 2rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-        }
-
-        th, td {
-            padding: 0.75rem 1rem;
             text-align: left;
-            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
 
         th {
             color: var(--text-primary);
             font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
             background-color: rgba(255, 255, 255, 0.02);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -113,44 +118,52 @@
     </style>
 </head>
 <body>
-
     <header>
         <h1>AuroraFit Performance Dashboard</h1>
-        <div class="disclaimer">PROTOTYPE: This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.</div>
+        <div class="disclaimer">
+            <strong>PROTOTYPE:</strong> This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
+        </div>
     </header>
 
     <main>
         <div class="grid">
             <div class="card">
                 <h2>Monthly Visitors</h2>
-                <canvas id="visitorsChart" aria-label="Line chart showing visitor growth"></canvas>
+                <canvas id="visitorsChart" aria-label="Line chart showing monthly visitor growth"></canvas>
             </div>
             <div class="card">
                 <h2>Monthly Conversions</h2>
-                <canvas id="conversionsChart" aria-label="Bar chart showing conversion growth"></canvas>
+                <canvas id="conversionsChart" aria-label="Bar chart showing monthly conversion growth"></canvas>
             </div>
             <div class="card">
                 <h2>Churn Rate (%)</h2>
-                <canvas id="churnChart" aria-label="Line chart showing churn rate decline"></canvas>
+                <canvas id="churnChart" aria-label="Line chart showing monthly churn rate decline"></canvas>
             </div>
             <div class="card">
-                <h2>Data Summary</h2>
-                <div class="table-container">
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Month</th>
-                                <th>Visitors</th>
-                                <th>Conversions</th>
-                                <th>Conv. Rate (%)</th>
-                                <th>Churn Rate (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Data populated by JS -->
-                        </tbody>
-                    </table>
-                </div>
+                <h2>Performance Summary</h2>
+                <p style="color: var(--text-secondary); text-align: center; padding: 1rem 0;">
+                    Visualization of growth trends and user retention projections for the AuroraFit launch.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Data Summary Table</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Visitors</th>
+                            <th>Conversions</th>
+                            <th>Conv. Rate (%)</th>
+                            <th>Churn Rate (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable">
+                        <!-- Data populated by JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
@@ -158,46 +171,58 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const data = [
-                { month: 'Month 1', visitors: 1567, conversions: 34, convRate: 2.2, churnRate: 6.5 },
-                { month: 'Month 2', visitors: 1739, conversions: 43, convRate: 2.5, churnRate: 6.2 },
-                { month: 'Month 3', visitors: 1896, conversions: 51, convRate: 2.7, churnRate: 6.1 },
-                { month: 'Month 4', visitors: 2124, conversions: 59, convRate: 2.8, churnRate: 5.7 },
-                { month: 'Month 5', visitors: 2336, conversions: 65, convRate: 2.8, churnRate: 5.5 },
-                { month: 'Month 6', visitors: 2523, conversions: 68, convRate: 2.7, churnRate: 5.5 },
+                { month: 'Month 1', visitors: 1567, conversions: 34, rate: 2.2, churn: 6.5 },
+                { month: 'Month 2', visitors: 1739, conversions: 43, rate: 2.5, churn: 6.2 },
+                { month: 'Month 3', visitors: 1896, conversions: 51, rate: 2.7, churn: 6.1 },
+                { month: 'Month 4', visitors: 2124, conversions: 59, rate: 2.8, churn: 5.7 },
+                { month: 'Month 5', visitors: 2336, conversions: 65, rate: 2.8, churn: 5.5 },
+                { month: 'Month 6', visitors: 2523, conversions: 68, rate: 2.7, churn: 5.5 },
             ];
 
-            const labels = data.map(d => d.month);
-
-            // Table population
-            const tbody = document.querySelector('#dataTable tbody');
-            data.forEach(d => {
-                const row = `<tr>
-                    <td>${d.month}</td>
-                    <td>${d.visitors.toLocaleString()}</td>
-                    <td>${d.conversions}</td>
-                    <td>${d.convRate}%</td>
-                    <td>${d.churnRate}%</td>
-                </tr>`;
-                tbody.innerHTML += row;
+            // Populate Table
+            const tableBody = document.getElementById('dataTable');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.month}</td>
+                    <td>${row.visitors.toLocaleString()}</td>
+                    <td>${row.conversions}</td>
+                    <td>${row.rate}%</td>
+                    <td>${row.churn}%</td>
+                `;
+                tableBody.appendChild(tr);
             });
 
+            const labels = data.map(d => d.month);
+            const colors = {
+                teal: '#14B8A6',
+                coral: '#FB7185',
+                text: '#F8FAFC'
+            };
+
             // Visitors Chart
-            new Chart(document.getElementById('visitorsChart'), {
+            const vCtx = document.getElementById('visitorsChart').getContext('2d');
+            const vGradient = vCtx.createLinearGradient(0, 0, 0, 400);
+            vGradient.addColorStop(0, 'rgba(20, 184, 166, 0.4)');
+            vGradient.addColorStop(1, 'rgba(20, 184, 166, 0)');
+
+            new Chart(vCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Visitors',
                         data: data.map(d => d.visitors),
-                        borderColor: '#14B8A6',
-                        backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                        borderColor: colors.teal,
+                        backgroundColor: vGradient,
                         fill: true,
-                        tension: 0.4
+                        tension: 0.4,
+                        pointBackgroundColor: colors.teal,
                     }]
                 },
                 options: {
                     responsive: true,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: colors.text } } },
                     scales: {
                         y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
                         x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
@@ -206,20 +231,21 @@
             });
 
             // Conversions Chart
-            new Chart(document.getElementById('conversionsChart'), {
+            const cCtx = document.getElementById('conversionsChart').getContext('2d');
+            new Chart(cCtx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Conversions',
                         data: data.map(d => d.conversions),
-                        backgroundColor: '#FB7185',
-                        borderRadius: 5
+                        backgroundColor: colors.coral,
+                        borderRadius: 5,
                     }]
                 },
                 options: {
                     responsive: true,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: colors.text } } },
                     scales: {
                         y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
                         x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
@@ -228,22 +254,24 @@
             });
 
             // Churn Chart
-            new Chart(document.getElementById('churnChart'), {
+            const chCtx = document.getElementById('churnChart').getContext('2d');
+            new Chart(chCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Churn Rate (%)',
-                        data: data.map(d => d.churnRate),
-                        borderColor: '#14B8A6',
+                        data: data.map(d => d.churn),
+                        borderColor: colors.teal,
                         borderDash: [5, 5],
-                        tension: 0.1,
-                        fill: false
+                        fill: false,
+                        tension: 0.4,
+                        pointBackgroundColor: colors.teal,
                     }]
                 },
                 options: {
                     responsive: true,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: colors.text } } },
                     scales: {
                         y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
                         x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
