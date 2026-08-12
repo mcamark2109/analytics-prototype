@@ -7,17 +7,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-primary: #121212;
-            --bg-surface: #1E1E1E;
-            --accent-primary: #14B8A6;
-            --accent-secondary: #FB7185;
+            --bg-color: #121212;
+            --surface-color: #1E1E1E;
+            --primary-accent: #14B8A6;
+            --secondary-accent: #FB7185;
             --text-primary: #F8FAFC;
             --text-secondary: #94A3B8;
             --border-color: #334155;
         }
 
         body {
-            background-color: var(--bg-primary);
+            background-color: var(--bg-color);
             color: var(--text-primary);
             font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
@@ -26,46 +26,47 @@
         }
 
         header {
+            padding: 2rem 1rem;
             text-align: center;
-            padding: 3rem 1rem;
-            background: linear-gradient(180deg, #1a1a1a 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
         }
 
         h1 {
             font-weight: 700;
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin: 0;
             letter-spacing: -0.025em;
             color: var(--text-primary);
         }
 
         .disclaimer {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
             background-color: rgba(20, 184, 166, 0.1);
-            border: 1px solid var(--accent-primary);
-            color: var(--accent-primary);
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: var(--primary-accent);
+            border: 1px solid var(--primary-accent);
+            padding: 0.75rem 1rem;
+            margin: 1rem auto;
+            max-width: 800px;
             border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
         }
 
         main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
 
         .viz-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .card {
-            background-color: var(--bg-surface);
+            background-color: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
@@ -73,191 +74,197 @@
         }
 
         .card h2 {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
             color: var(--text-secondary);
             font-weight: 600;
-            text-align: center;
         }
 
         .table-container {
             overflow-x: auto;
+            margin-top: 2rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
-            color: var(--text-secondary);
+            text-align: left;
+            color: var(--text-primary);
         }
 
         th, td {
-            padding: 1rem;
-            text-align: left;
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         th {
-            color: var(--text-primary);
+            color: var(--text-secondary);
             font-weight: 600;
-            background-color: rgba(255, 255, 255, 0.02);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
         }
 
         tr:hover {
-            background-color: rgba(255, 255, 255, 0.01);
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
         @media (max-width: 768px) {
             .viz-grid {
                 grid-template-columns: 1fr;
             }
-            h1 {
-                font-size: 1.75rem;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>AuroraFit Performance Dashboard</h1>
-        <div class="disclaimer">
-            PROTOTYPE: This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
-        </div>
-    </header>
 
-    <main>
-        <div class="viz-grid">
-            <div class="card">
-                <h2>Monthly Visitors</h2>
-                <canvas id="visitorsChart" aria-label="Line chart showing growth of monthly visitors"></canvas>
-            </div>
-            <div class="card">
-                <h2>Total Conversions</h2>
-                <canvas id="conversionsChart" aria-label="Bar chart showing growth of monthly conversions"></canvas>
-            </div>
-            <div class="card" style="grid-column: span 2;">
-                <h2>Churn Rate Trend (%)</h2>
-                <canvas id="churnChart" aria-label="Line chart showing decline of churn rate" style="max-height: 300px;"></canvas>
-            </div>
-        </div>
+<header>
+    <h1>AuroraFit Performance Dashboard</h1>
+    <div class="disclaimer">
+        PROTOTYPE: This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
+    </div>
+</header>
 
+<main>
+    <div class="viz-grid">
         <div class="card">
-            <h2>Projected Data Summary</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Visitors</th>
-                            <th>Conversions</th>
-                            <th>Conv. Rate (%)</th>
-                            <th>Churn Rate (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTable">
-                        <!-- Data inserted by JS -->
-                    </tbody>
-                </table>
-            </div>
+            <h2>Monthly Visitors</h2>
+            <canvas id="visitorsChart" aria-label="Line chart showing projected visitor growth over 6 months"></canvas>
         </div>
-    </main>
+        <div class="card">
+            <h2>Monthly Conversions</h2>
+            <canvas id="conversionsChart" aria-label="Bar chart showing projected conversions over 6 months"></canvas>
+        </div>
+        <div class="card" style="grid-column: span 2;">
+            <h2>Churn Rate Trend (%)</h2>
+            <canvas id="churnChart" aria-label="Line chart showing projected churn rate decline over 6 months" height="100"></canvas>
+        </div>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const data = [
-                { month: 'Month 1', visitors: 1567, conversions: 34, convRate: 2.2, churnRate: 6.5 },
-                { month: 'Month 2', visitors: 1739, conversions: 43, convRate: 2.5, churnRate: 6.2 },
-                { month: 'Month 3', visitors: 1896, conversions: 51, convRate: 2.7, churnRate: 6.1 },
-                { month: 'Month 4', visitors: 2124, conversions: 59, convRate: 2.8, churnRate: 5.7 },
-                { month: 'Month 5', visitors: 2336, conversions: 65, convRate: 2.8, churnRate: 5.5 },
-                { month: 'Month 6', visitors: 2523, conversions: 68, convRate: 2.7, churnRate: 5.5 },
-            ];
+    <div class="card">
+        <h2>Projected Data Summary</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Visitors</th>
+                        <th>Conversions</th>
+                        <th>Conv. Rate (%)</th>
+                        <th>Churn Rate (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody">
+                    <!-- Data injected by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 
-            const labels = data.map(d => d.month);
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const data = [
+            { month: 'Month 1', visitors: 1567, conversions: 34, rate: 2.2, churn: 6.5 },
+            { month: 'Month 2', visitors: 1739, conversions: 43, rate: 2.5, churn: 6.2 },
+            { month: 'Month 3', visitors: 1896, conversions: 51, rate: 2.7, churn: 6.1 },
+            { month: 'Month 4', visitors: 2124, conversions: 59, rate: 2.8, churn: 5.7 },
+            { month: 'Month 5', visitors: 2336, conversions: 65, rate: 2.8, churn: 5.5 },
+            { month: 'Month 6', visitors: 2523, conversions: 68, rate: 2.7, churn: 5.5 },
+        ];
 
-            // Data Table
-            const tbody = document.getElementById('dataTable');
-            data.forEach(d => {
-                const row = `<tr>
-                    <td>${d.month}</td>
-                    <td>${d.visitors.toLocaleString()}</td>
-                    <td>${d.conversions}</td>
-                    <td>${d.convRate}%</td>
-                    <td>${d.churnRate}%</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
+        const labels = data.map(d => d.month);
+        const visitors = data.map(d => d.visitors);
+        const conversions = data.map(d => d.conversions);
+        const churn = data.map(d => d.churn);
 
-            // Visitors Chart
-            new Chart(document.getElementById('visitorsChart'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Visitors',
-                        data: data.map(d => d.visitors),
-                        borderColor: '#14B8A6',
-                        backgroundColor: 'rgba(20, 184, 166, 0.2)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { labels: { color: '#94A3B8' } } },
-                    scales: {
-                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
-                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
-                    }
+        // Visitors Chart
+        new Chart(document.getElementById('visitorsChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Visitors',
+                    data: visitors,
+                    borderColor: '#14B8A6',
+                    backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#14B8A6'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
                 }
-            });
-
-            // Conversions Chart
-            new Chart(document.getElementById('conversionsChart'), {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Conversions',
-                        data: data.map(d => d.conversions),
-                        backgroundColor: '#FB7185',
-                        borderRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { labels: { color: '#94A3B8' } } },
-                    scales: {
-                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
-                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
-                    }
-                }
-            });
-
-            // Churn Chart
-            new Chart(document.getElementById('churnChart'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Churn Rate (%)',
-                        data: data.map(d => d.churnRate),
-                        borderColor: '#14B8A6',
-                        borderDash: [5, 5],
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#94A3B8' } } },
-                    scales: {
-                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
-                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
-                    }
-                }
-            });
+            }
         });
-    </script>
+
+        // Conversions Chart
+        new Chart(document.getElementById('conversionsChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Conversions',
+                    data: conversions,
+                    backgroundColor: '#FB7185',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                }
+            }
+        });
+
+        // Churn Chart
+        new Chart(document.getElementById('churnChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Churn Rate (%)',
+                    data: churn,
+                    borderColor: '#14B8A6',
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                    pointBackgroundColor: '#14B8A6'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                }
+            }
+        });
+
+        // Populate Table
+        const tbody = document.getElementById('dataTableBody');
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.month}</td>
+                <td>${row.visitors.toLocaleString()}</td>
+                <td>${row.conversions}</td>
+                <td>${row.rate}%</td>
+                <td>${row.churn}%</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    });
+</script>
+
 </body>
 </html>
