@@ -9,11 +9,11 @@
         :root {
             --bg-primary: #121212;
             --bg-surface: #1E1E1E;
-            --accent-primary: #14B8A6;
-            --accent-secondary: #FB7185;
+            --accent-teal: #14B8A6;
+            --accent-coral: #FB7185;
             --text-primary: #F8FAFC;
             --text-secondary: #94A3B8;
-            --border-divider: #334155;
+            --border-color: #334155;
         }
 
         body {
@@ -26,59 +26,57 @@
         }
 
         header {
-            padding: 2rem;
+            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 1px solid var(--border-divider);
+            border-bottom: 1px solid var(--border-color);
         }
 
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            margin: 0;
+            margin: 0 0 0.5rem 0;
             letter-spacing: -0.025em;
-            color: var(--text-primary);
         }
 
         .disclaimer {
             background-color: rgba(20, 184, 166, 0.1);
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
+            color: var(--accent-teal);
             padding: 0.75rem 1rem;
-            margin: 1rem auto;
-            max-width: 800px;
             border-radius: 8px;
+            display: inline-block;
+            font-weight: 600;
             font-size: 0.9rem;
-            font-weight: 500;
-            text-align: center;
+            border: 1px solid var(--accent-teal);
+            margin-top: 1rem;
         }
 
         main {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         .viz-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .card {
             background-color: var(--bg-surface);
-            border: 1px solid var(--border-divider);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .card h2 {
-            font-size: 1.25rem;
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
+        .card-title {
+            font-size: 1.1rem;
             font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .table-container {
@@ -93,164 +91,175 @@
         }
 
         th {
+            background-color: rgba(51, 65, 85, 0.5);
+            color: var(--text-primary);
             text-align: left;
             padding: 1rem;
-            border-bottom: 2px solid var(--border-divider);
-            color: var(--text-primary);
             font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
         }
 
         td {
             padding: 1rem;
-            border-bottom: 1px solid var(--border-divider);
+            border-bottom: 1px solid var(--border-color);
         }
 
         tr:hover {
             background-color: rgba(255, 255, 255, 0.02);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .viz-grid {
                 grid-template-columns: 1fr;
             }
             h1 {
-                font-size: 1.75rem;
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>AuroraFit Performance Dashboard</h1>
-    <div class="disclaimer">
-        PROTOTYPE: This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
-    </div>
-</header>
+    <header>
+        <h1>AuroraFit Performance Dashboard</h1>
+        <div class="disclaimer">
+            PROTOTYPE: This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
+        </div>
+    </header>
 
-<main>
-    <section class="viz-grid">
-        <div class="card">
-            <h2>Monthly Visitors</h2>
-            <canvas id="visitorsChart"></canvas>
-        </div>
-        <div class="card">
-            <h2>Monthly Conversions</h2>
-            <canvas id="conversionsChart"></canvas>
-        </div>
-        <div class="card">
-            <h2>Churn Rate (%)</h2>
-            <canvas id="churnChart"></canvas>
-        </div>
-        <div class="card">
-            <h2>Quick Stats</h2>
-            <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center; height: 100%;">
-                <div style="font-size: 1.1rem;">Projected Max Visitors: <strong style="color: var(--accent-primary);">2,523</strong></div>
-                <div style="font-size: 1.1rem;">Projected Max Conversions: <strong style="color: var(--accent-secondary);">68</strong></div>
-                <div style="font-size: 1.1rem;">Target Min Churn: <strong style="color: var(--accent-primary);">5.5%</strong></div>
+    <main>
+        <div class="viz-grid">
+            <div class="card">
+                <div class="card-title">Projected Visitors</div>
+                <canvas id="visitorsChart" aria-label="Line chart showing projected visitor growth"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-title">Projected Conversions</div>
+                <canvas id="conversionsChart" aria-label="Bar chart showing projected conversion growth"></canvas>
+            </div>
+            <div class="card">
+                <div class="card-title">Projected Churn Rate (%)</div>
+                <canvas id="churnChart" aria-label="Line chart showing projected churn rate decline"></canvas>
             </div>
         </div>
-    </section>
 
-    <section class="card">
-        <h2>Projected Data Summary</h2>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Month</th>
-                        <th>Visitors</th>
-                        <th>Conversions</th>
-                        <th>Conv. Rate (%)</th>
-                        <th>Churn Rate (%)</th>
-                    </tr>
-                </thead>
-                <tbody id="dataTable">
-                    <!-- Data populated by JS -->
-                </tbody>
-            </table>
+        <div class="card">
+            <div class="card-title">Projected Data Summary</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Visitors</th>
+                            <th>Conversions</th>
+                            <th>Conv. Rate (%)</th>
+                            <th>Churn Rate (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable">
+                        <!-- Data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </section>
-</main>
+    </main>
 
-<script>
-    const data = [
-        { month: 'Month 1', visitors: 1567, conversions: 34, rate: 2.2, churn: 6.5 },
-        { month: 'Month 2', visitors: 1739, conversions: 43, rate: 2.5, churn: 6.2 },
-        { month: 'Month 3', visitors: 1896, conversions: 51, rate: 2.7, churn: 6.1 },
-        { month: 'Month 4', visitors: 2124, conversions: 59, rate: 2.8, churn: 5.7 },
-        { month: 'Month 5', visitors: 2336, conversions: 65, rate: 2.8, churn: 5.5 },
-        { month: 'Month 6', visitors: 2523, conversions: 68, rate: 2.7, churn: 5.5 },
-    ];
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = [
+                { month: 'Month 1', visitors: 1567, conversions: 34, convRate: 2.2, churnRate: 6.5 },
+                { month: 'Month 2', visitors: 1739, conversions: 43, convRate: 2.5, churnRate: 6.2 },
+                { month: 'Month 3', visitors: 1896, conversions: 51, convRate: 2.7, churnRate: 6.1 },
+                { month: 'Month 4', visitors: 2124, conversions: 59, convRate: 2.8, churnRate: 5.7 },
+                { month: 'Month 5', visitors: 2336, conversions: 65, convRate: 2.8, churnRate: 5.5 },
+                { month: 'Month 6', visitors: 2523, conversions: 68, convRate: 2.7, churnRate: 5.5 },
+            ];
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // Populate Table
-        const tableBody = document.getElementById('dataTable');
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.month}</td>
-                <td>${row.visitors.toLocaleString()}</td>
-                <td>${row.conversions}</td>
-                <td>${row.rate}%</td>
-                <td>${row.churn}%</td>
-            `;
-            tableBody.appendChild(tr);
+            // Populate Table
+            const tableBody = document.getElementById('dataTable');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.month}</td>
+                    <td>${row.visitors.toLocaleString()}</td>
+                    <td>${row.conversions}</td>
+                    <td>${row.convRate}%</td>
+                    <td>${row.churnRate}%</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            const labels = data.map(d => d.month);
+            
+            // Visitors Chart
+            new Chart(document.getElementById('visitorsChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visitors',
+                        data: data.map(d => d.visitors),
+                        borderColor: '#14B8A6',
+                        backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#94A3B8' } } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
+
+            // Conversions Chart
+            new Chart(document.getElementById('conversionsChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Conversions',
+                        data: data.map(d => d.conversions),
+                        backgroundColor: '#FB7185',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#94A3B8' } } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
+
+            // Churn Chart
+            new Chart(document.getElementById('churnChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Churn Rate (%)',
+                        data: data.map(d => d.churnRate),
+                        borderColor: '#14B8A6',
+                        borderDash: [5, 5],
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#94A3B8' } } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
         });
-
-        // Chart Defaults
-        Chart.defaults.color = '#94A3B8';
-        Chart.defaults.borderColor = '#334155';
-
-        // Visitors Chart
-        new Chart(document.getElementById('visitorsChart'), {
-            type: 'line',
-            data: {
-                labels: data.map(d => d.month),
-                datasets: [{
-                    label: 'Visitors',
-                    data: data.map(d => d.visitors),
-                    borderColor: '#14B8A6',
-                    backgroundColor: 'rgba(20, 184, 166, 0.2)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-
-        // Conversions Chart
-        new Chart(document.getElementById('conversionsChart'), {
-            type: 'bar',
-            data: {
-                labels: data.map(d => d.month),
-                datasets: [{
-                    label: 'Conversions',
-                    data: data.map(d => d.conversions),
-                    backgroundColor: '#FB7185',
-                    borderRadius: 5
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-
-        // Churn Chart
-        new Chart(document.getElementById('churnChart'), {
-            type: 'line',
-            data: {
-                labels: data.map(d => d.month),
-                datasets: [{
-                    label: 'Churn Rate %',
-                    data: data.map(d => d.churn),
-                    borderColor: '#14B8A6',
-                    borderDash: [5, 5],
-                    tension: 0.4
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-    });
-</script>
-
+    </script>
 </body>
 </html>
