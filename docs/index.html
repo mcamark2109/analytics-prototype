@@ -3,212 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOOPS FOR HOPE | Jersey Drop Analytics</title>
+    <title>Apex Horizon: Strategic Performance Projection</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --deep-charcoal: #121212;
-            --neon-orange: #FF5F1F;
-            --slate-grey: #2A2A2A;
-            --off-white: #E0E0E0;
-            --pure-white: #FFFFFF;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --midnight-obsidian: #0A0A0B;
+            --champagne-gold: #D4AF37;
+            --soft-platinum: #E5E4E2;
+            --ivory-silk: #FDFDFD;
+            --slate-shadow: #666666;
         }
 
         body {
-            background-color: var(--deep-charcoal);
-            color: var(--off-white);
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--midnight-obsidian);
+            color: var(--ivory-silk);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-            color: var(--pure-white);
-            letter-spacing: 1px;
-        }
-
-        /* Background Video */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            object-fit: cover;
-            filter: grayscale(50%) brightness(40%);
-        }
-
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(rgba(18,18,18,0.8), rgba(18,18,18,0.8));
-        }
-
-        /* Header */
         header {
-            padding: 4rem 2rem;
             text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #151518 0%, var(--midnight-obsidian) 100%);
+            border-bottom: 1px solid var(--champagne-gold);
         }
 
-        header h1 {
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--champagne-gold);
             font-size: 3rem;
             margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(255, 95, 31, 0.4);
         }
 
-        .critical-notice {
-            background-color: rgba(255, 95, 31, 0.15);
-            border: 1px solid var(--neon-orange);
-            color: var(--pure-white);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            display: inline-block;
-            font-weight: bold;
+        .disclaimer {
+            color: var(--soft-platinum);
             font-size: 0.9rem;
+            font-weight: 300;
             text-transform: uppercase;
-            backdrop-filter: blur(5px);
+            letter-spacing: 2px;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid var(--slate-shadow);
+            padding: 10px 20px;
+            display: inline-block;
         }
 
-        /* Main Layout */
         main {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            margin: 60px auto;
+            padding: 0 20px;
         }
 
-        /* Chart Grid */
-        .chart-grid {
+        .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
         }
 
-        .chart-card {
-            background-color: var(--slate-grey);
-            border-radius: 8px;
-            padding: 1.5rem;
-            border-bottom: 3px solid var(--neon-orange);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 30px;
+            border-radius: 2px;
+            transition: border 0.3s ease;
         }
 
-        .chart-card:hover {
-            transform: translateY(-5px);
+        .luxury-card:hover {
+            border-color: var(--champagne-gold);
         }
 
-        .chart-card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+        .luxury-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--champagne-gold);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
             text-align: center;
         }
 
-        .full-width {
-            grid-column: span 2;
+        .data-section {
+            margin-top: 80px;
         }
 
-        /* Data Table */
-        .table-container {
-            background-color: var(--slate-grey);
-            border-radius: 8px;
-            padding: 2rem;
-            border-bottom: 3px solid var(--neon-orange);
-            overflow-x: auto;
-        }
-
-        .table-container h2 {
-            margin-bottom: 1.5rem;
+        .data-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--champagne-gold);
             text-align: center;
+            margin-bottom: 40px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
-            font-size: 1rem;
+            margin-bottom: 100px;
         }
 
         th {
-            color: var(--pure-white);
-            border-bottom: 2px solid var(--neon-orange);
-            padding: 1rem;
+            color: var(--slate-shadow);
+            text-align: left;
+            font-weight: 400;
+            padding: 15px;
+            border-bottom: 1px solid var(--slate-shadow);
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
 
         td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--ivory-silk);
         }
 
         tr:hover td {
-            background-color: rgba(255,255,255,0.05);
+            background-color: rgba(212, 175, 55, 0.05);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .chart-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
-            header h1 {
-                font-size: 2rem;
-            }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--slate-shadow);
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
-    <video class="video-bg" autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-basketball-player-dribbling-the-ball-in-the-court-41465-large.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="video-overlay"></div>
 
     <header>
-        <h1>Hoops for Hope: Jersey Drop Analytics</h1>
-        <div class="critical-notice">
-            PROTOTYPE: This dashboard contains SIMULATED/PROJECTED data for strategic planning purposes.
+        <h1>Apex Horizon: Strategic Performance Projection</h1>
+        <div class="disclaimer">
+            NOTICE: This dashboard contains simulated/projected estimates for strategic planning purposes only.
         </div>
     </header>
 
     <main>
-        <div class="chart-grid">
-            <div class="chart-card">
-                <h2>Projected Visitors</h2>
+        <section class="analytics-grid">
+            <div class="luxury-card">
+                <h2>Visitor Growth Trend</h2>
                 <canvas id="visitorsChart"></canvas>
             </div>
-            <div class="chart-card">
-                <h2>Projected Conversions</h2>
+            <div class="luxury-card">
+                <h2>Conversion Volume</h2>
                 <canvas id="conversionsChart"></canvas>
             </div>
-            <div class="chart-card full-width">
-                <h2>Projected Churn Rate (%)</h2>
+            <div class="luxury-card">
+                <h2>Churn Rate Decline</h2>
                 <canvas id="churnChart"></canvas>
             </div>
-        </div>
+        </section>
 
-        <div class="table-container">
-            <h2>Projected Performance Data</h2>
+        <section class="data-section">
+            <h2>Raw Data Repository</h2>
             <table>
                 <thead>
                     <tr>
@@ -220,31 +170,47 @@
                     </tr>
                 </thead>
                 <tbody id="dataTableBody">
-                    <!-- Data injected by JS -->
+                    <!-- Data injected via JS -->
                 </tbody>
             </table>
-        </div>
+        </section>
     </main>
 
+    <footer>
+        &copy; 2026 Apex Horizon Luxury repositioning campaign.
+    </footer>
+
     <script>
-        const projectedData = [
-            { month: 'Month 1', visitors: 1658, conversions: 36, convRate: '2.2%', churnRate: 6.5 },
-            { month: 'Month 2', visitors: 1791, conversions: 43, convRate: '2.4%', churnRate: 6.5 },
-            { month: 'Month 3', visitors: 1934, conversions: 46, convRate: '2.4%', churnRate: 6.5 },
-            { month: 'Month 4', visitors: 2089, conversions: 46, convRate: '2.2%', churnRate: 6.5 },
-            { month: 'Month 5', visitors: 2256, conversions: 56, convRate: '2.5%', churnRate: 6.5 },
-            { month: 'Month 6', visitors: 2436, conversions: 63, convRate: '2.6%', churnRate: 6.5 },
+        const data = [
+            { month: 'Month 1', visitors: 1568, conversions: 34, convRate: '2.2%', churnRate: 6.5 },
+            { month: 'Month 2', visitors: 1709, conversions: 39, convRate: '2.3%', churnRate: 6.4 },
+            { month: 'Month 3', visitors: 1880, conversions: 39, convRate: '2.1%', churnRate: 6.2 },
+            { month: 'Month 4', visitors: 2087, conversions: 48, convRate: '2.3%', churnRate: 5.9 },
+            { month: 'Month 5', visitors: 2337, conversions: 51, convRate: '2.2%', churnRate: 5.5 },
+            { month: 'Month 6', visitors: 2524, conversions: 63, convRate: '2.5%', churnRate: 5.5 },
         ];
 
-        const labels = projectedData.map(d => d.month);
-        const visitors = projectedData.map(d => d.visitors);
-        const conversions = projectedData.map(d => d.conversions);
-        const churns = projectedData.map(d => d.churnRate);
+        const labels = data.map(d => d.month);
+        const goldColor = '#D4AF37';
+        const platinumColor = '#E5E4E2';
 
-        // Global Chart Defaults
-        Chart.defaults.color = '#E0E0E0';
-        Chart.defaults.font.family = 'Roboto';
-        Chart.defaults.borderColor = 'rgba(224, 224, 224, 0.1)';
+        // Common chart options
+        const commonOptions = {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(229, 228, 226, 0.1)' },
+                    ticks: { color: '#666666' }
+                },
+                y: {
+                    grid: { color: 'rgba(229, 228, 226, 0.1)' },
+                    ticks: { color: '#666666' }
+                }
+            }
+        };
 
         // Visitors Chart
         new Chart(document.getElementById('visitorsChart'), {
@@ -253,23 +219,15 @@
                 labels: labels,
                 datasets: [{
                     label: 'Visitors',
-                    data: visitors,
-                    borderColor: '#FF5F1F',
-                    backgroundColor: 'rgba(255, 95, 31, 0.1)',
-                    fill: true,
-                    tension: 0.4,
+                    data: data.map(d => d.visitors),
+                    borderColor: goldColor,
+                    backgroundColor: 'transparent',
                     borderWidth: 3,
-                    pointBackgroundColor: '#FFFFFF'
+                    tension: 0.3,
+                    pointBackgroundColor: goldColor
                 }]
             },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: false },
-                    x: { grid: { display: false } }
-                }
-            }
+            options: commonOptions
         });
 
         // Conversions Chart
@@ -279,21 +237,12 @@
                 labels: labels,
                 datasets: [{
                     label: 'Conversions',
-                    data: conversions,
-                    backgroundColor: 'rgba(255, 95, 31, 0.7)',
-                    borderColor: '#FF5F1F',
-                    borderWidth: 1,
-                    borderRadius: 4
+                    data: data.map(d => d.conversions),
+                    backgroundColor: goldColor,
+                    borderRadius: 2
                 }]
             },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true },
-                    x: { grid: { display: false } }
-                }
-            }
+            options: commonOptions
         });
 
         // Churn Chart
@@ -302,34 +251,21 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Churn Rate %',
-                    data: churns,
-                    borderColor: '#FF5F1F',
-                    borderDash: [5, 5],
-                    borderWidth: 2,
-                    pointBackgroundColor: '#FFFFFF',
-                    tension: 0,
-                    fill: false
+                    label: 'Churn Rate (%)',
+                    data: data.map(d => d.churnRate),
+                    borderColor: goldColor,
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    pointBackgroundColor: goldColor
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { 
-                        beginAtZero: false,
-                        suggestedMin: 6,
-                        suggestedMax: 7 
-                    },
-                    x: { grid: { display: false } }
-                }
-            }
+            options: commonOptions
         });
 
-        // Table Data Injection
-        const tbody = document.getElementById('dataTableBody');
-        projectedData.forEach(row => {
+        // Table Injection
+        const tableBody = document.getElementById('dataTableBody');
+        data.forEach(row => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${row.month}</td>
@@ -338,7 +274,7 @@
                 <td>${row.convRate}</td>
                 <td>${row.churnRate}%</td>
             `;
-            tbody.appendChild(tr);
+            tableBody.appendChild(tr);
         });
     </script>
 </body>
