@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuroraFit Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1E1E1E;
+            --primary-accent: #14B8A6;
+            --secondary-accent: #FB7185;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --border-color: #334155;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: -0.025em;
+        }
+
+        .disclaimer {
+            background-color: var(--surface-color);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .table-container {
+            grid-column: span 2;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .table-container {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AuroraFit Performance Dashboard</h1>
+        <div class="disclaimer">
+            <strong>PROTOTYPE:</strong> This dashboard displays SIMULATED/PROJECTED estimates for planning purposes.
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <div class="card">
+            <h2>Monthly Visitors</h2>
+            <canvas id="visitorsChart" aria-label="Line chart showing growth of monthly visitors"></canvas>
+        </div>
+        <div class="card">
+            <h2>Monthly Conversions</h2>
+            <canvas id="conversionsChart" aria-label="Bar chart showing growth of monthly conversions"></canvas>
+        </div>
+        <div class="card">
+            <h2>Churn Rate (%)</h2>
+            <canvas id="churnChart" aria-label="Line chart showing decline of monthly churn rate"></canvas>
+        </div>
+        <div class="card">
+            <h2>Key Performance Summary</h2>
+            <p style="color: var(--text-secondary); text-align: center;">Projected growth trends for the AuroraFit launch.</p>
+        </div>
+        <div class="card table-container">
+            <h2>Projected Data Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Visitors</th>
+                        <th>Conversions</th>
+                        <th>Conv. Rate (%)</th>
+                        <th>Churn Rate (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Month 1</td><td>1,567</td><td>34</td><td>2.2</td><td>6.5</td></tr>
+                    <tr><td>Month 2</td><td>1,739</td><td>43</td><td>2.5</td><td>6.2</td></tr>
+                    <tr><td>Month 3</td><td>1,896</td><td>51</td><td>2.7</td><td>6.1</td></tr>
+                    <tr><td>Month 4</td><td>2,124</td><td>59</td><td>2.8</td><td>5.7</td></tr>
+                    <tr><td>Month 5</td><td>2,336</td><td>65</td><td>2.8</td><td>5.5</td></tr>
+                    <tr><td>Month 6</td><td>2,523</td><td>68</td><td>2.7</td><td>5.5</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const labels = ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'];
+            
+            // Visitors Chart
+            new Chart(document.getElementById('visitorsChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visitors',
+                        data: [1567, 1739, 1896, 2124, 2336, 2523],
+                        borderColor: '#14B8A6',
+                        backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
+
+            // Conversions Chart
+            new Chart(document.getElementById('conversionsChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Conversions',
+                        data: [34, 43, 51, 59, 65, 68],
+                        backgroundColor: '#FB7185',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
+
+            // Churn Chart
+            new Chart(document.getElementById('churnChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Churn Rate (%)',
+                        data: [6.5, 6.2, 6.1, 5.7, 5.5, 5.5],
+                        borderColor: '#14B8A6',
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94A3B8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94A3B8' } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
